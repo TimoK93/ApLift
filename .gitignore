@@ -1,0 +1,10 @@
+/tmp/
+/data/tmp/
+/data/models/
+/venv/
+/slurm/
+/data/
+
+sandbox.py
+.idea
+*.pyc
