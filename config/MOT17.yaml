@@ -1,0 +1,88 @@
+working_dir: results/MOT17-Test
+#dataset: MOT17
+#pretrained_models_path: data/models/MOT17
+data_config:
+    features:
+        - delta_t
+        - center_iou
+        - embedding_distance
+    features_to_normalize:
+        - center_iou
+        - embedding_distance
+    graph_config:
+        max_time_distance: 2
+        pre_pruning: optical_flow_with_dg_heuristic
+        gt_classes_to_train_on: [1, 2, 7, 8, 12]
+        sparse_frame_indices:  [0, 1, 2, 3, 4, 5, 6, 7, 14, 21, 28, 36, 37, 38, 40, 46, 53, 60]
+        max_edge_len: 60
+        # For Training
+        sample_top_k_around_random_point: 150
+        sample_detections: False
+        detection_sample_rate: 0.7
+        gt_min_visibility: 0.3
+        samples_per_batch: 15
+    dataset:
+        name: MOT17Preprocessed
+        detector: FRCNN
+        root_path: data/tmp
+        load_visual_embedding: True
+training_config:
+    drop_factor: 0.01
+    drop_lr_every: 13000
+    epochs: 5
+    accumulate_gradients : 8
+    loss_config:
+        focal_lambda: 1
+        positive_weight: 1
+        positive_weight_max: 1
+    optimizer_config:
+        lr: 0.1
+    sequences_for_training:
+      #- MOT17-02-FRCNN
+      - MOT17-04-FRCNN
+      - MOT17-05-FRCNN
+      - MOT17-09-FRCNN
+      - MOT17-10-FRCNN
+      - MOT17-11-FRCNN
+      - MOT17-13-FRCNN
+    sequences_for_inference:
+      - MOT17-02-FRCNN
+    evaluation_config:
+model_config:
+    solver_config:
+      solve_instance_wise: False
+      lpmp_config:
+        input_cost: 0
+        output_cost: 0
+        sparsify: 1
+        knn_gap:  6
+        knn_k: 3
+        base_threshold: 3
+        dense_timegap_lifted: 50
+        negative_threshold_lifted: -0.01
+        positive_threshold_lifted: 0.01
+        longer_lifted_interval: 4
+        max_timegap_base: 60
+        max_timegap_lifted:  60
+        max_timegap_complete: 60
+        use_adaptive_thresholds: 0
+        all_base_to_zero: 1
+        tight_min_improvement: 0.0001
+        tight_max_edge_usage: 4
+        missing_as_must_cut: 1
+        must_cut_penalty: 15
+        primal_heuristic_iterations: 10
+        use_pre_iterate: 0
+        merge_threshold: 0.25
+        iterations: 30
+      tighten_config:
+        tightenConstraintsPercentage: 0.5
+        tightenInterval: 20
+        tightenIteration: 20
+        roundingReparametrization: uniform:0.5
+        tightenReparametrization: uniform:0.8
+        standardReparametrization: uniform:0.8
+
+
+
+
