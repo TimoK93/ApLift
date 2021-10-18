@@ -43,7 +43,7 @@ python prepare_datasets.py
 ```
 
 ### Extract models.zip
-Our pretrained classifiers are available [here](https://www.tnt.uni-hannover.de/de/project/MPT/data/MakingHigherOrderMOTScalable/).
+Our pretrained classifiers are available [here](https://www.tnt.uni-hannover.de/de/project/MPT/data/MakingHigherOrderMOTScalable/models.zip).
 To use them, unzip it into *./data/*. 
 
 ### Download required MOTChallenge datasets and features
